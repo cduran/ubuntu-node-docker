@@ -37,18 +37,17 @@ USER ${USERNAME}
 RUN mkdir "/tmp/app"
 WORKDIR "/tmp/app"
 
+COPY package.json package.json
 COPY install-nvm.sh install-nvm.sh
+COPY activate-nvm.sh activate-nvm.sh
 COPY install-app.sh install-app.sh
 COPY run-app.sh run-app.sh
 
-COPY package.json .
-
 RUN ./install-nvm.sh
+RUN ./install-app.sh
 
 COPY . .
-RUN ./install-app.sh
 
 EXPOSE 5000
 
 ENTRYPOINT ["/bin/bash", "-c", "./run-app.sh"]
-
